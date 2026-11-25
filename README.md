@@ -12,7 +12,7 @@
 ## 0. 30 秒上手
 
 ```bash
-cd project-erp
+cd erp-analytics-lab
 python -m venv .venv && .venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 python scripts/seed_db.py --reset                    # 建库 + 灌 24 个月确定性数据
@@ -20,6 +20,11 @@ uvicorn app.main:app --reload --port 8000            # 起服务
 ```
 
 打开 <http://127.0.0.1:8000> → 用 `analyst / Analyst@123456` 登录 → 看经营看板。
+
+> **Windows 最省事的方式：双击项目根目录的 `启动网站.bat`。**
+> 它会自动检测服务是否在跑（在跑就直接开 Edge，没跑就先起服务再开 Edge），
+> 不需要记命令、也不需要关心当前终端在哪个子目录。
+> 注意：必须在**项目根目录**执行脚本；如果在 `web\` 等子目录里，请先 `cd ..` 回到 `erp-analytics-lab`。
 
 一键完成（Windows PowerShell）：
 
@@ -63,7 +68,7 @@ uvicorn app.main:app --reload --port 8000            # 起服务
 ## 3. 目录结构
 
 ```
-project-erp/
+erp-analytics-lab/
 ├── app/
 │   ├── api/routes/          # auth / dashboard / erp —— 控制器
 │   ├── services/            # auth_service / order_service / insight_service
