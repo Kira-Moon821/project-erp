@@ -8,6 +8,9 @@
 *.db binary
 # VBA 宏是 GBK + CRLF，必须原样入库
 *.bas binary
+# Windows 启动脚本是 GBK + CRLF，必须原样入库（否则克隆后换行被改写、cmd 解析报错）
+*.bat binary
+*.cmd binary
 
 # 文本：仓库内统一 LF，工作区按平台检出
 * text=auto
