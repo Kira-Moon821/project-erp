@@ -20,7 +20,8 @@ uvicorn app.main:app --reload --port 8000            # 起服务
 ```
 
 打开 <http://127.0.0.1:8000> → 用 `analyst / Analyst@123456` 登录 → 看经营看板。
-
+简化：打开cmd输入
+C:\Users\86153\WorkBuddy\2026-11-25-14-08-17\erp-analytics-lab\启动网站.bat
 > **Windows 最省事的方式：双击项目根目录的 `启动网站.bat`。**
 > 它会自动检测服务是否在跑（在跑就直接开 Edge，没跑就先起服务再开 Edge），
 > 不需要记命令、也不需要关心当前终端在哪个子目录。
