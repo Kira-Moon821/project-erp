@@ -8,9 +8,6 @@
 *.db binary
 # VBA 宏是 GBK + CRLF，必须原样入库
 *.bas binary
-# Windows 启动脚本是 GBK + CRLF，必须原样入库（否则克隆后换行被改写、cmd 解析报错）
-*.bat binary
-*.cmd binary
 
 # 文本：仓库内统一 LF，工作区按平台检出
 * text=auto
@@ -20,3 +17,8 @@
 *.tmdl text eol=lf
 *.pq text eol=lf
 *.dax text eol=lf
+
+# 注意：必须放在 `* text=auto` 之后，否则会被重新判定为文本并改写换行
+# Windows 启动脚本是 GBK + CRLF，原样入库（否则克隆后换行被改写、cmd 解析报错）
+*.bat binary
+*.cmd binary
