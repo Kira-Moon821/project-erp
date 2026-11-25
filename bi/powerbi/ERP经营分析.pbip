@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "ERP经营分析.SemanticModel"
+    }
+  },
+  "reportReference": {
+    "byPath": {
+      "path": "ERP经营分析.Report"
+    }
+  }
+}

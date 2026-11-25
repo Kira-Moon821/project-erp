@@ -1,0 +1,19 @@
+# 二进制资产：不做行尾转换，避免编码/压缩内容被改坏
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.xlsx binary
+*.xlsm binary
+*.twbx binary
+*.db binary
+# VBA 宏是 GBK + CRLF，必须原样入库
+*.bas binary
+
+# 文本：仓库内统一 LF，工作区按平台检出
+* text=auto
+
+# Tableau 工作簿是 XML，保持 LF 便于 diff
+*.twb text eol=lf
+*.tmdl text eol=lf
+*.pq text eol=lf
+*.dax text eol=lf

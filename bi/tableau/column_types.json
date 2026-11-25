@@ -1,0 +1,724 @@
+{
+  "dim_customer": [
+    {
+      "name": "customer_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_name",
+      "type": "string"
+    },
+    {
+      "name": "industry",
+      "type": "string"
+    },
+    {
+      "name": "region",
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "type": "string"
+    },
+    {
+      "name": "tier",
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "type": "string"
+    },
+    {
+      "name": "acquisition_source",
+      "type": "string"
+    },
+    {
+      "name": "contract_date",
+      "type": "date"
+    },
+    {
+      "name": "customer_manager_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_manager",
+      "type": "string"
+    },
+    {
+      "name": "annual_contract_value",
+      "type": "real"
+    },
+    {
+      "name": "status",
+      "type": "string"
+    }
+  ],
+  "dim_date": [
+    {
+      "name": "date_id",
+      "type": "integer"
+    },
+    {
+      "name": "full_date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "quarter",
+      "type": "string"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "month",
+      "type": "integer"
+    },
+    {
+      "name": "month_name",
+      "type": "string"
+    },
+    {
+      "name": "week_of_year",
+      "type": "integer"
+    },
+    {
+      "name": "day_of_week",
+      "type": "integer"
+    },
+    {
+      "name": "is_weekend",
+      "type": "boolean"
+    }
+  ],
+  "dim_employee": [
+    {
+      "name": "employee_id",
+      "type": "integer"
+    },
+    {
+      "name": "employee_name",
+      "type": "string"
+    },
+    {
+      "name": "team",
+      "type": "string"
+    },
+    {
+      "name": "role",
+      "type": "string"
+    },
+    {
+      "name": "region",
+      "type": "string"
+    },
+    {
+      "name": "hire_date",
+      "type": "date"
+    },
+    {
+      "name": "is_active",
+      "type": "boolean"
+    }
+  ],
+  "dim_product": [
+    {
+      "name": "product_id",
+      "type": "integer"
+    },
+    {
+      "name": "sku",
+      "type": "string"
+    },
+    {
+      "name": "product_name",
+      "type": "string"
+    },
+    {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "brand",
+      "type": "string"
+    },
+    {
+      "name": "unit",
+      "type": "string"
+    },
+    {
+      "name": "unit_cost",
+      "type": "real"
+    },
+    {
+      "name": "list_price",
+      "type": "real"
+    },
+    {
+      "name": "supplier_id",
+      "type": "integer"
+    },
+    {
+      "name": "launch_date",
+      "type": "date"
+    },
+    {
+      "name": "status",
+      "type": "string"
+    }
+  ],
+  "fact_ai_usage_flat": [
+    {
+      "name": "usage_id",
+      "type": "integer"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "employee_id",
+      "type": "integer"
+    },
+    {
+      "name": "employee_name",
+      "type": "string"
+    },
+    {
+      "name": "sales_team",
+      "type": "string"
+    },
+    {
+      "name": "sales_role",
+      "type": "string"
+    },
+    {
+      "name": "scenario",
+      "type": "string"
+    },
+    {
+      "name": "query_count",
+      "type": "integer"
+    },
+    {
+      "name": "accepted_count",
+      "type": "integer"
+    },
+    {
+      "name": "acceptance_rate",
+      "type": "real"
+    },
+    {
+      "name": "minutes_saved",
+      "type": "real"
+    }
+  ],
+  "fact_customer_ticket_flat": [
+    {
+      "name": "ticket_id",
+      "type": "integer"
+    },
+    {
+      "name": "created_date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "customer_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_name",
+      "type": "string"
+    },
+    {
+      "name": "customer_tier",
+      "type": "string"
+    },
+    {
+      "name": "customer_industry",
+      "type": "string"
+    },
+    {
+      "name": "customer_region",
+      "type": "string"
+    },
+    {
+      "name": "topic_type",
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "type": "string"
+    },
+    {
+      "name": "ai_handled",
+      "type": "boolean"
+    },
+    {
+      "name": "first_response_minutes",
+      "type": "integer"
+    },
+    {
+      "name": "resolution_hours",
+      "type": "real"
+    },
+    {
+      "name": "satisfaction",
+      "type": "integer"
+    },
+    {
+      "name": "converted_to_opportunity",
+      "type": "integer"
+    }
+  ],
+  "fact_inventory_snapshot_flat": [
+    {
+      "name": "snapshot_id",
+      "type": "integer"
+    },
+    {
+      "name": "snapshot_date",
+      "type": "date"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "quarter",
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "type": "integer"
+    },
+    {
+      "name": "sku",
+      "type": "string"
+    },
+    {
+      "name": "product_name",
+      "type": "string"
+    },
+    {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "brand",
+      "type": "string"
+    },
+    {
+      "name": "warehouse",
+      "type": "string"
+    },
+    {
+      "name": "on_hand_qty",
+      "type": "integer"
+    },
+    {
+      "name": "safety_stock",
+      "type": "integer"
+    },
+    {
+      "name": "in_transit_qty",
+      "type": "integer"
+    },
+    {
+      "name": "stock_gap",
+      "type": "integer"
+    },
+    {
+      "name": "unit_cost",
+      "type": "real"
+    },
+    {
+      "name": "inventory_value",
+      "type": "real"
+    }
+  ],
+  "fact_lead_opportunity_flat": [
+    {
+      "name": "lead_id",
+      "type": "integer"
+    },
+    {
+      "name": "lead_name",
+      "type": "string"
+    },
+    {
+      "name": "created_date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "quarter",
+      "type": "string"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "customer_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_name",
+      "type": "string"
+    },
+    {
+      "name": "customer_tier",
+      "type": "string"
+    },
+    {
+      "name": "customer_industry",
+      "type": "string"
+    },
+    {
+      "name": "customer_region",
+      "type": "string"
+    },
+    {
+      "name": "source_channel",
+      "type": "string"
+    },
+    {
+      "name": "stage",
+      "type": "string"
+    },
+    {
+      "name": "expected_amount",
+      "type": "real"
+    },
+    {
+      "name": "actual_amount",
+      "type": "real"
+    },
+    {
+      "name": "win_probability",
+      "type": "real"
+    },
+    {
+      "name": "ai_assisted",
+      "type": "boolean"
+    },
+    {
+      "name": "cycle_days",
+      "type": "integer"
+    },
+    {
+      "name": "loss_reason",
+      "type": "string"
+    },
+    {
+      "name": "owner_employee_id",
+      "type": "integer"
+    },
+    {
+      "name": "owner_name",
+      "type": "string"
+    },
+    {
+      "name": "sales_team",
+      "type": "string"
+    }
+  ],
+  "fact_marketing_spend_flat": [
+    {
+      "name": "spend_id",
+      "type": "integer"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "type": "string"
+    },
+    {
+      "name": "campaign_name",
+      "type": "string"
+    },
+    {
+      "name": "cost_amount",
+      "type": "real"
+    },
+    {
+      "name": "leads_count",
+      "type": "integer"
+    },
+    {
+      "name": "revenue_attributed",
+      "type": "real"
+    },
+    {
+      "name": "cac",
+      "type": "real"
+    },
+    {
+      "name": "roas",
+      "type": "real"
+    }
+  ],
+  "fact_sales_order_flat": [
+    {
+      "name": "order_id",
+      "type": "integer"
+    },
+    {
+      "name": "order_no",
+      "type": "string"
+    },
+    {
+      "name": "order_date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "quarter",
+      "type": "string"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "month",
+      "type": "integer"
+    },
+    {
+      "name": "customer_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_name",
+      "type": "string"
+    },
+    {
+      "name": "customer_tier",
+      "type": "string"
+    },
+    {
+      "name": "customer_industry",
+      "type": "string"
+    },
+    {
+      "name": "customer_region",
+      "type": "string"
+    },
+    {
+      "name": "customer_city",
+      "type": "string"
+    },
+    {
+      "name": "customer_channel",
+      "type": "string"
+    },
+    {
+      "name": "acquisition_source",
+      "type": "string"
+    },
+    {
+      "name": "employee_id",
+      "type": "integer"
+    },
+    {
+      "name": "employee_name",
+      "type": "string"
+    },
+    {
+      "name": "sales_team",
+      "type": "string"
+    },
+    {
+      "name": "sales_role",
+      "type": "string"
+    },
+    {
+      "name": "order_channel",
+      "type": "string"
+    },
+    {
+      "name": "order_status",
+      "type": "string"
+    },
+    {
+      "name": "payment_status",
+      "type": "string"
+    },
+    {
+      "name": "gross_amount",
+      "type": "real"
+    },
+    {
+      "name": "discount_amount",
+      "type": "real"
+    },
+    {
+      "name": "net_amount",
+      "type": "real"
+    },
+    {
+      "name": "cost_amount",
+      "type": "real"
+    },
+    {
+      "name": "gross_profit",
+      "type": "real"
+    },
+    {
+      "name": "discount_rate",
+      "type": "real"
+    },
+    {
+      "name": "gross_margin",
+      "type": "real"
+    },
+    {
+      "name": "delivery_days",
+      "type": "integer"
+    },
+    {
+      "name": "is_return",
+      "type": "boolean"
+    }
+  ],
+  "fact_sales_order_item_flat": [
+    {
+      "name": "order_item_id",
+      "type": "integer"
+    },
+    {
+      "name": "order_id",
+      "type": "integer"
+    },
+    {
+      "name": "order_no",
+      "type": "string"
+    },
+    {
+      "name": "order_date",
+      "type": "date"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "year_month",
+      "type": "string"
+    },
+    {
+      "name": "customer_id",
+      "type": "integer"
+    },
+    {
+      "name": "customer_tier",
+      "type": "string"
+    },
+    {
+      "name": "customer_industry",
+      "type": "string"
+    },
+    {
+      "name": "customer_region",
+      "type": "string"
+    },
+    {
+      "name": "order_channel",
+      "type": "string"
+    },
+    {
+      "name": "order_status",
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "type": "integer"
+    },
+    {
+      "name": "sku",
+      "type": "string"
+    },
+    {
+      "name": "product_name",
+      "type": "string"
+    },
+    {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "brand",
+      "type": "string"
+    },
+    {
+      "name": "unit",
+      "type": "string"
+    },
+    {
+      "name": "qty",
+      "type": "integer"
+    },
+    {
+      "name": "unit_price",
+      "type": "real"
+    },
+    {
+      "name": "discount_rate",
+      "type": "real"
+    },
+    {
+      "name": "revenue_amount",
+      "type": "real"
+    },
+    {
+      "name": "cost_amount",
+      "type": "real"
+    },
+    {
+      "name": "gross_profit",
+      "type": "real"
+    }
+  ]
+}

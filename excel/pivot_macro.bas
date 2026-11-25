@@ -1,0 +1,266 @@
+Attribute VB_Name = "pivot_macro"
+Option Explicit
+
+'==================================================================
+' ERP 经营分析实验室 - Excel 数据透视表一键生成宏
+'------------------------------------------------------------------
+' 用法：
+'   1) 打开 ERP经营分析_数据源.xlsx
+'   2) Alt+F11 打开 VBA 编辑器
+'   3) 文件 -> 导入文件 -> 选择本文件 pivot_macro.bas
+'   4) 回到 Excel，Alt+F8 运行 BuildAllPivots
+'   5) 生成的真透视表会出现在名为 [真透视表] 的新工作表里
+'
+' 口径（与 docs/数据字典与业务口径.md 一致）：
+'   营收 = net_amount 求和，且 order_status = 已完成
+'   毛利 = gross_profit 求和
+'   毛利率 = 毛利 / 营收
+'   库存 = inventory_value 求和，缺货 = stock_gap 求和
+'==================================================================
+
+Private Const TARGET_SHEET As String = "真透视表"
+Private Const SRC_ITEM  As String = "商品销售明细"
+Private Const SRC_ORDER As String = "订单明细表"
+Private Const SRC_LEAD  As String = "线索商机"
+Private Const SRC_MKT   As String = "营销投放"
+Private Const SRC_AI    As String = "AI使用记录"
+Private Const SRC_INV   As String = "库存快照"
+
+'---------------------------------------------------------------
+' 主入口：生成 7 个数据透视表
+'---------------------------------------------------------------
+Sub BuildAllPivots()
+    Dim wb As Workbook
+    Dim tgt As Worksheet
+    Dim r As Long, c As Long
+    Dim pt As PivotTable
+
+    Set wb = ThisWorkbook
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    On Error GoTo FailHandler
+
+    Set tgt = EnsureSheet(wb, TARGET_SHEET)
+    tgt.Cells.Clear
+    tgt.Range("A1").Value = "Excel 数据透视表（由 pivot_macro.bas 一键生成）"
+    tgt.Range("A1").Font.Bold = True
+    tgt.Range("A1").Font.Size = 14
+    tgt.Range("A2").Value = "口径：营收 = net_amount 求和且 order_status = 已完成；毛利率 = 毛利 / 营收；缺货 = stock_gap 求和"
+    tgt.Range("A2").Font.Italic = True
+    tgt.Range("A2").Font.Color = RGB(90, 90, 90)
+
+    r = 4
+    c = 1
+
+    ' 1) 品类营收透视（商品销售明细）
+    BuildPivot wb, tgt, SRC_ITEM, "pt_category", r, c, "category", _
+              Array("revenue_amount", "gross_profit", "qty"), _
+              Array("营收", "毛利", "销量"), _
+              Array(xlSum, xlSum, xlSum), "", ""
+    AddCalcField tgt.PivotTables("pt_category"), "毛利率", "=IFERROR([毛利]/[营收],0)", "0.0%"
+
+    ' 2) 品牌 x 品类透视（商品销售明细）
+    BuildPivot wb, tgt, SRC_ITEM, "pt_brand", r, c + 6, "brand", _
+              Array("revenue_amount", "gross_profit"), _
+              Array("营收", "毛利"), _
+              Array(xlSum, xlSum), "", ""
+    With tgt.PivotTables("pt_brand")
+        .PivotFields("category").Orientation = xlRowField
+        .PivotFields("category").Position = 1
+        .PivotFields("brand").Orientation = xlRowField
+        .PivotFields("brand").Position = 2
+    End With
+
+    ' 3) 客户层级 x 行业透视（订单明细表，页面筛选：已完成）
+    BuildPivot wb, tgt, SRC_ORDER, "pt_customer", r + 22, c, "customer_tier", _
+              Array("net_amount", "order_id"), _
+              Array("净营收", "订单数"), _
+              Array(xlSum, xlCount), "order_status", "已完成"
+    With tgt.PivotTables("pt_customer")
+        .PivotFields("customer_industry").Orientation = xlRowField
+        .PivotFields("customer_industry").Position = 2
+        .AddDataField .PivotFields("net_amount"), "净营收", xlSum
+    End With
+
+    ' 4) 月度趋势透视（订单明细表，页面筛选：已完成）
+    BuildPivot wb, tgt, SRC_ORDER, "pt_monthly", r + 22, c + 6, "year_month", _
+              Array("net_amount", "order_id", "gross_profit"), _
+              Array("净营收", "订单数", "毛利"), _
+              Array(xlSum, xlCount, xlSum), "order_status", "已完成"
+
+    ' 5) 商机漏斗透视（线索商机）
+    BuildPivot wb, tgt, SRC_LEAD, "pt_funnel", r + 44, c, "stage", _
+              Array("lead_id", "actual_amount", "ai_assisted"), _
+              Array("商机数", "商机金额", "AI辅助数"), _
+              Array(xlCount, xlSum, xlCount), "", ""
+    AddCalcField tgt.PivotTables("pt_funnel"), "AI辅助占比", "=IFERROR([AI辅助数]/[商机数],0)", "0.0%"
+
+    ' 6) 渠道投放效率透视（营销投放）
+    BuildPivot wb, tgt, SRC_MKT, "pt_channel", r + 44, c + 6, "channel", _
+              Array("cost_amount", "revenue_attributed", "leads_count", "roas"), _
+              Array("投放成本", "归因收入", "线索数", "ROAS"), _
+              Array(xlSum, xlSum, xlSum, xlAverage), "", ""
+
+    ' 7) AI 使用效能透视（AI使用记录）
+    BuildPivot wb, tgt, SRC_AI, "pt_ai", r + 66, c, "scenario", _
+              Array("query_count", "accepted_count", "minutes_saved"), _
+              Array("AI调用次数", "采纳次数", "节省工时"), _
+              Array(xlSum, xlSum, xlSum), "", ""
+    AddCalcField tgt.PivotTables("pt_ai"), "AI采纳率", "=IFERROR([采纳次数]/[AI调用次数],0)", "0.0%"
+
+    ' 8) 库存健康透视（库存快照）
+    BuildPivot wb, tgt, SRC_INV, "pt_inventory", r + 66, c + 6, "warehouse", _
+              Array("inventory_value", "stock_gap", "on_hand_qty"), _
+              Array("库存金额", "缺货量", "在库量"), _
+              Array(xlSum, xlSum, xlSum), "", ""
+    With tgt.PivotTables("pt_inventory")
+        .PivotFields("category").Orientation = xlRowField
+        .PivotFields("category").Position = 2
+    End With
+
+    tgt.Activate
+    tgt.Range("A1").Select
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+    MsgBox "已生成 8 个数据透视表，见工作表 [真透视表]。" & vbCrLf & _
+           "如需导出 CSV，运行宏 ExportPivotCsv。", vbInformation, "ERP 经营分析实验室"
+    Exit Sub
+
+FailHandler:
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+    MsgBox "生成过程中出错：" & vbCrLf & Err.Description & vbCrLf & vbCrLf & _
+           "若提示 PivotTable 名称重复，请先删除 [真透视表] 工作表后重试。", vbExclamation, "出错了"
+End Sub
+
+'---------------------------------------------------------------
+' 通用：创建一个透视表
+'---------------------------------------------------------------
+Private Sub BuildPivot(wb As Workbook, tgt As Worksheet, srcSheet As String, ptName As String, _
+                        r As Long, c As Long, rowField As String, _
+                        valFields As Variant, valCaptions As Variant, valFuncs As Variant, _
+                        pageField As String, pageValue As String)
+    Dim src As Worksheet
+    Dim lastRow As Long, lastCol As Long
+    Dim rng As Range
+    Dim pc As PivotCache
+    Dim pt As PivotTable
+    Dim i As Long
+
+    Set src = wb.Worksheets(srcSheet)
+    lastRow = src.Cells(src.Rows.Count, 1).End(xlUp).Row
+    lastCol = src.Cells(1, src.Columns.Count).End(xlToLeft).Column
+    Set rng = src.Range(src.Cells(1, 1), src.Cells(lastRow, lastCol))
+
+    Set pc = wb.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=rng)
+    Set pt = pc.CreatePivotTable(TableDestination:=tgt.Cells(r, c), TableName:=ptName)
+
+    pt.PivotFields(rowField).Orientation = xlRowField
+    pt.PivotFields(rowField).Position = 1
+
+    For i = LBound(valFields) To UBound(valFields)
+        With pt.AddDataField(pt.PivotFields(CStr(valFields(i))), CStr(valCaptions(i)), CLng(valFuncs(i)))
+            If CLng(valFuncs(i)) <> xlCount Then .NumberFormat = "#,##0.00"
+        End With
+    Next i
+
+    If Len(pageField) > 0 Then
+        With pt.PivotFields(pageField)
+            .Orientation = xlPageField
+            .CurrentPage = pageValue
+        End With
+    End If
+
+    On Error Resume Next
+    pt.RowAxisLayout xlTabularRow
+    pt.TableStyle2 = "PivotStyleMedium9"
+    pt.ShowTableStyleRowStripes = True
+    On Error GoTo 0
+End Sub
+
+'---------------------------------------------------------------
+' 通用：添加计算字段
+'---------------------------------------------------------------
+Private Sub AddCalcField(pt As PivotTable, calcName As String, formula As String, numFmt As String)
+    On Error Resume Next
+    pt.CalculatedFields.Add calcName, formula, True
+    pt.PivotFields(calcName).NumberFormat = numFmt
+    On Error GoTo 0
+End Sub
+
+'---------------------------------------------------------------
+' 通用：确保工作表存在
+'---------------------------------------------------------------
+Private Function EnsureSheet(wb As Workbook, nm As String) As Worksheet
+    Dim ws As Worksheet
+    On Error Resume Next
+    Set ws = wb.Worksheets(nm)
+    On Error GoTo 0
+    If ws Is Nothing Then
+        Set ws = wb.Worksheets.Add(After:=wb.Worksheets(wb.Worksheets.Count))
+        ws.Name = nm
+    End If
+    Set EnsureSheet = ws
+End Function
+
+'---------------------------------------------------------------
+' 把所有透视表导出为 CSV（用于与静态预聚合页交叉核对）
+'---------------------------------------------------------------
+Sub ExportPivotCsv()
+    Dim wb As Workbook
+    Dim pt As PivotTable
+    Dim nb As Workbook
+    Dim ws As Worksheet
+    Dim outDir As String
+    Dim fso As Object
+
+    Set wb = ThisWorkbook
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    outDir = wb.Path & Application.PathSeparator & "pivot_output"
+    If Not fso.FolderExists(outDir) Then fso.CreateFolder outDir
+
+    Application.ScreenUpdating = False
+    For Each pt In wb.PivotTables
+        pt.TableRange1.Copy
+        Set nb = Workbooks.Add
+        Set ws = nb.Worksheets(1)
+        ws.Paste
+        ws.Cells(1, 1).Select
+        Application.DisplayAlerts = False
+        nb.SaveAs Filename:=outDir & Application.PathSeparator & pt.Name & ".csv", FileFormat:=xlCSV
+        Application.DisplayAlerts = True
+        nb.Close SaveChanges:=False
+    Next pt
+    Application.ScreenUpdating = True
+    MsgBox "已导出 " & wb.PivotTables.Count & " 个透视表到：" & vbCrLf & outDir, vbInformation, "导出完成"
+End Sub
+
+'---------------------------------------------------------------
+' 与静态页交叉核对：把透视表结果与 [透视结果_品类营收] 对比
+'---------------------------------------------------------------
+Sub VerifyAgainstStatic()
+    Dim wb As Workbook
+    Dim pt As PivotTable
+    Dim ws As Worksheet
+    Dim diff As Double
+    Dim v As Double
+    Dim lastRow As Long
+    Dim i As Long
+
+    Set wb = ThisWorkbook
+    Set pt = wb.PivotTables("pt_category")
+    Set ws = wb.Worksheets("透视结果_品类营收")
+
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row - 1
+    diff = 0
+    For i = 3 To lastRow
+        v = pt.PivotFields("营收").PivotItems(CStr(ws.Cells(i, 1).Value)).Value
+        diff = diff + Abs(v - CDbl(ws.Cells(i, 2).Value))
+    Next i
+
+    If diff < 1 Then
+        MsgBox "核对通过：透视表营收与静态预聚合页差异 = " & diff & " 元", vbInformation, "核对一致"
+    Else
+        MsgBox "核对发现差异：合计 " & diff & " 元，请检查口径", vbExclamation, "核对不一致"
+    End If
+End Sub

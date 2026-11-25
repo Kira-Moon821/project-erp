@@ -1,0 +1,1041 @@
+model ERP经营分析
+	culture: zh-CN
+
+	table dim_date
+		column 'date_id'
+			dataType: int64
+			sourceColumn: date_id
+			annotation PBI_ResultType = Table
+		column 'full_date'
+			dataType: dateTime
+			sourceColumn: full_date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'quarter'
+			dataType: string
+			sourceColumn: quarter
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'month'
+			dataType: int64
+			sourceColumn: month
+			annotation PBI_ResultType = Table
+		column 'month_name'
+			dataType: string
+			sourceColumn: month_name
+			annotation PBI_ResultType = Table
+		column 'week_of_year'
+			dataType: int64
+			sourceColumn: week_of_year
+			annotation PBI_ResultType = Table
+		column 'day_of_week'
+			dataType: int64
+			sourceColumn: day_of_week
+			annotation PBI_ResultType = Table
+		column 'is_weekend'
+			dataType: boolean
+			sourceColumn: is_weekend
+			annotation PBI_ResultType = Table
+		partition dim_date = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\dim_date.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"date_id", int64.Type}, {"full_date", dateTime.Type}, {"year", int64.Type}, {"quarter", string.Type}, {"year_month", string.Type}, {"month", int64.Type}, {"month_name", string.Type}, {"week_of_year", int64.Type}, {"day_of_week", int64.Type}, {"is_weekend", boolean.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"date_id", "date_id", Replacer.ReplaceText, {"date_id"})
+				in
+					#"Removed BOM"
+
+	table dim_customer
+		column 'customer_id'
+			dataType: int64
+			sourceColumn: customer_id
+			annotation PBI_ResultType = Table
+		column 'customer_name'
+			dataType: string
+			sourceColumn: customer_name
+			annotation PBI_ResultType = Table
+		column 'industry'
+			dataType: string
+			sourceColumn: industry
+			annotation PBI_ResultType = Table
+		column 'region'
+			dataType: string
+			sourceColumn: region
+			annotation PBI_ResultType = Table
+		column 'city'
+			dataType: string
+			sourceColumn: city
+			annotation PBI_ResultType = Table
+		column 'tier'
+			dataType: string
+			sourceColumn: tier
+			annotation PBI_ResultType = Table
+		column 'channel'
+			dataType: string
+			sourceColumn: channel
+			annotation PBI_ResultType = Table
+		column 'acquisition_source'
+			dataType: string
+			sourceColumn: acquisition_source
+			annotation PBI_ResultType = Table
+		column 'contract_date'
+			dataType: dateTime
+			sourceColumn: contract_date
+			annotation PBI_ResultType = Table
+		column 'customer_manager_id'
+			dataType: int64
+			sourceColumn: customer_manager_id
+			annotation PBI_ResultType = Table
+		column 'customer_manager'
+			dataType: string
+			sourceColumn: customer_manager
+			annotation PBI_ResultType = Table
+		column 'annual_contract_value'
+			dataType: double
+			sourceColumn: annual_contract_value
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'status'
+			dataType: string
+			sourceColumn: status
+			annotation PBI_ResultType = Table
+		partition dim_customer = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\dim_customer.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", int64.Type}, {"customer_name", string.Type}, {"industry", string.Type}, {"region", string.Type}, {"city", string.Type}, {"tier", string.Type}, {"channel", string.Type}, {"acquisition_source", string.Type}, {"contract_date", dateTime.Type}, {"customer_manager_id", int64.Type}, {"customer_manager", string.Type}, {"annual_contract_value", double.Type}, {"status", string.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"customer_id", "customer_id", Replacer.ReplaceText, {"customer_id"})
+				in
+					#"Removed BOM"
+
+	table dim_employee
+		column 'employee_id'
+			dataType: int64
+			sourceColumn: employee_id
+			annotation PBI_ResultType = Table
+		column 'employee_name'
+			dataType: string
+			sourceColumn: employee_name
+			annotation PBI_ResultType = Table
+		column 'team'
+			dataType: string
+			sourceColumn: team
+			annotation PBI_ResultType = Table
+		column 'role'
+			dataType: string
+			sourceColumn: role
+			annotation PBI_ResultType = Table
+		column 'region'
+			dataType: string
+			sourceColumn: region
+			annotation PBI_ResultType = Table
+		column 'hire_date'
+			dataType: dateTime
+			sourceColumn: hire_date
+			annotation PBI_ResultType = Table
+		column 'is_active'
+			dataType: boolean
+			sourceColumn: is_active
+			annotation PBI_ResultType = Table
+		partition dim_employee = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\dim_employee.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"employee_id", int64.Type}, {"employee_name", string.Type}, {"team", string.Type}, {"role", string.Type}, {"region", string.Type}, {"hire_date", dateTime.Type}, {"is_active", boolean.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"employee_id", "employee_id", Replacer.ReplaceText, {"employee_id"})
+				in
+					#"Removed BOM"
+
+	table dim_product
+		column 'product_id'
+			dataType: int64
+			sourceColumn: product_id
+			annotation PBI_ResultType = Table
+		column 'sku'
+			dataType: string
+			sourceColumn: sku
+			annotation PBI_ResultType = Table
+		column 'product_name'
+			dataType: string
+			sourceColumn: product_name
+			annotation PBI_ResultType = Table
+		column 'category'
+			dataType: string
+			sourceColumn: category
+			annotation PBI_ResultType = Table
+		column 'brand'
+			dataType: string
+			sourceColumn: brand
+			annotation PBI_ResultType = Table
+		column 'unit'
+			dataType: string
+			sourceColumn: unit
+			annotation PBI_ResultType = Table
+		column 'unit_cost'
+			dataType: double
+			sourceColumn: unit_cost
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'list_price'
+			dataType: double
+			sourceColumn: list_price
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'supplier_id'
+			dataType: int64
+			sourceColumn: supplier_id
+			annotation PBI_ResultType = Table
+		column 'launch_date'
+			dataType: dateTime
+			sourceColumn: launch_date
+			annotation PBI_ResultType = Table
+		column 'status'
+			dataType: string
+			sourceColumn: status
+			annotation PBI_ResultType = Table
+		partition dim_product = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\dim_product.csv"),[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"product_id", int64.Type}, {"sku", string.Type}, {"product_name", string.Type}, {"category", string.Type}, {"brand", string.Type}, {"unit", string.Type}, {"unit_cost", double.Type}, {"list_price", double.Type}, {"supplier_id", int64.Type}, {"launch_date", dateTime.Type}, {"status", string.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"product_id", "product_id", Replacer.ReplaceText, {"product_id"})
+				in
+					#"Removed BOM"
+
+	table fact_sales_order
+		column 'order_id'
+			dataType: int64
+			sourceColumn: order_id
+			annotation PBI_ResultType = Table
+		column 'order_no'
+			dataType: string
+			sourceColumn: order_no
+			annotation PBI_ResultType = Table
+		column 'order_date'
+			dataType: dateTime
+			sourceColumn: order_date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'quarter'
+			dataType: string
+			sourceColumn: quarter
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'month'
+			dataType: int64
+			sourceColumn: month
+			annotation PBI_ResultType = Table
+		column 'customer_id'
+			dataType: int64
+			sourceColumn: customer_id
+			annotation PBI_ResultType = Table
+		column 'customer_name'
+			dataType: string
+			sourceColumn: customer_name
+			annotation PBI_ResultType = Table
+		column 'customer_tier'
+			dataType: string
+			sourceColumn: customer_tier
+			annotation PBI_ResultType = Table
+		column 'customer_industry'
+			dataType: string
+			sourceColumn: customer_industry
+			annotation PBI_ResultType = Table
+		column 'customer_region'
+			dataType: string
+			sourceColumn: customer_region
+			annotation PBI_ResultType = Table
+		column 'customer_city'
+			dataType: string
+			sourceColumn: customer_city
+			annotation PBI_ResultType = Table
+		column 'customer_channel'
+			dataType: string
+			sourceColumn: customer_channel
+			annotation PBI_ResultType = Table
+		column 'acquisition_source'
+			dataType: string
+			sourceColumn: acquisition_source
+			annotation PBI_ResultType = Table
+		column 'employee_id'
+			dataType: int64
+			sourceColumn: employee_id
+			annotation PBI_ResultType = Table
+		column 'employee_name'
+			dataType: string
+			sourceColumn: employee_name
+			annotation PBI_ResultType = Table
+		column 'sales_team'
+			dataType: string
+			sourceColumn: sales_team
+			annotation PBI_ResultType = Table
+		column 'sales_role'
+			dataType: string
+			sourceColumn: sales_role
+			annotation PBI_ResultType = Table
+		column 'order_channel'
+			dataType: string
+			sourceColumn: order_channel
+			annotation PBI_ResultType = Table
+		column 'order_status'
+			dataType: string
+			sourceColumn: order_status
+			annotation PBI_ResultType = Table
+		column 'payment_status'
+			dataType: string
+			sourceColumn: payment_status
+			annotation PBI_ResultType = Table
+		column 'gross_amount'
+			dataType: double
+			sourceColumn: gross_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'discount_amount'
+			dataType: double
+			sourceColumn: discount_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'net_amount'
+			dataType: double
+			sourceColumn: net_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'cost_amount'
+			dataType: double
+			sourceColumn: cost_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'gross_profit'
+			dataType: double
+			sourceColumn: gross_profit
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'discount_rate'
+			dataType: double
+			sourceColumn: discount_rate
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'gross_margin'
+			dataType: double
+			sourceColumn: gross_margin
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'delivery_days'
+			dataType: int64
+			sourceColumn: delivery_days
+			annotation PBI_ResultType = Table
+		column 'is_return'
+			dataType: boolean
+			sourceColumn: is_return
+			annotation PBI_ResultType = Table
+		partition fact_sales_order = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_sales_order_flat.csv"),[Delimiter=",", Columns=31, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", int64.Type}, {"order_no", string.Type}, {"order_date", dateTime.Type}, {"year", int64.Type}, {"quarter", string.Type}, {"year_month", string.Type}, {"month", int64.Type}, {"customer_id", int64.Type}, {"customer_name", string.Type}, {"customer_tier", string.Type}, {"customer_industry", string.Type}, {"customer_region", string.Type}, {"customer_city", string.Type}, {"customer_channel", string.Type}, {"acquisition_source", string.Type}, {"employee_id", int64.Type}, {"employee_name", string.Type}, {"sales_team", string.Type}, {"sales_role", string.Type}, {"order_channel", string.Type}, {"order_status", string.Type}, {"payment_status", string.Type}, {"gross_amount", double.Type}, {"discount_amount", double.Type}, {"net_amount", double.Type}, {"cost_amount", double.Type}, {"gross_profit", double.Type}, {"discount_rate", double.Type}, {"gross_margin", double.Type}, {"delivery_days", int64.Type}, {"is_return", boolean.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"order_id", "order_id", Replacer.ReplaceText, {"order_id"})
+				in
+					#"Removed BOM"
+
+	table fact_sales_order_item
+		column 'order_item_id'
+			dataType: int64
+			sourceColumn: order_item_id
+			annotation PBI_ResultType = Table
+		column 'order_id'
+			dataType: int64
+			sourceColumn: order_id
+			annotation PBI_ResultType = Table
+		column 'order_no'
+			dataType: string
+			sourceColumn: order_no
+			annotation PBI_ResultType = Table
+		column 'order_date'
+			dataType: dateTime
+			sourceColumn: order_date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'customer_id'
+			dataType: int64
+			sourceColumn: customer_id
+			annotation PBI_ResultType = Table
+		column 'customer_tier'
+			dataType: string
+			sourceColumn: customer_tier
+			annotation PBI_ResultType = Table
+		column 'customer_industry'
+			dataType: string
+			sourceColumn: customer_industry
+			annotation PBI_ResultType = Table
+		column 'customer_region'
+			dataType: string
+			sourceColumn: customer_region
+			annotation PBI_ResultType = Table
+		column 'order_channel'
+			dataType: string
+			sourceColumn: order_channel
+			annotation PBI_ResultType = Table
+		column 'order_status'
+			dataType: string
+			sourceColumn: order_status
+			annotation PBI_ResultType = Table
+		column 'product_id'
+			dataType: int64
+			sourceColumn: product_id
+			annotation PBI_ResultType = Table
+		column 'sku'
+			dataType: string
+			sourceColumn: sku
+			annotation PBI_ResultType = Table
+		column 'product_name'
+			dataType: string
+			sourceColumn: product_name
+			annotation PBI_ResultType = Table
+		column 'category'
+			dataType: string
+			sourceColumn: category
+			annotation PBI_ResultType = Table
+		column 'brand'
+			dataType: string
+			sourceColumn: brand
+			annotation PBI_ResultType = Table
+		column 'unit'
+			dataType: string
+			sourceColumn: unit
+			annotation PBI_ResultType = Table
+		column 'qty'
+			dataType: int64
+			sourceColumn: qty
+			annotation PBI_ResultType = Table
+		column 'unit_price'
+			dataType: double
+			sourceColumn: unit_price
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'discount_rate'
+			dataType: double
+			sourceColumn: discount_rate
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'revenue_amount'
+			dataType: double
+			sourceColumn: revenue_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'cost_amount'
+			dataType: double
+			sourceColumn: cost_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'gross_profit'
+			dataType: double
+			sourceColumn: gross_profit
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		partition fact_sales_order_item = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_sales_order_item_flat.csv"),[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_item_id", int64.Type}, {"order_id", int64.Type}, {"order_no", string.Type}, {"order_date", dateTime.Type}, {"year", int64.Type}, {"year_month", string.Type}, {"customer_id", int64.Type}, {"customer_tier", string.Type}, {"customer_industry", string.Type}, {"customer_region", string.Type}, {"order_channel", string.Type}, {"order_status", string.Type}, {"product_id", int64.Type}, {"sku", string.Type}, {"product_name", string.Type}, {"category", string.Type}, {"brand", string.Type}, {"unit", string.Type}, {"qty", int64.Type}, {"unit_price", double.Type}, {"discount_rate", double.Type}, {"revenue_amount", double.Type}, {"cost_amount", double.Type}, {"gross_profit", double.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"order_item_id", "order_item_id", Replacer.ReplaceText, {"order_item_id"})
+				in
+					#"Removed BOM"
+
+	table fact_inventory_snapshot
+		column 'snapshot_id'
+			dataType: int64
+			sourceColumn: snapshot_id
+			annotation PBI_ResultType = Table
+		column 'snapshot_date'
+			dataType: dateTime
+			sourceColumn: snapshot_date
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'quarter'
+			dataType: string
+			sourceColumn: quarter
+			annotation PBI_ResultType = Table
+		column 'product_id'
+			dataType: int64
+			sourceColumn: product_id
+			annotation PBI_ResultType = Table
+		column 'sku'
+			dataType: string
+			sourceColumn: sku
+			annotation PBI_ResultType = Table
+		column 'product_name'
+			dataType: string
+			sourceColumn: product_name
+			annotation PBI_ResultType = Table
+		column 'category'
+			dataType: string
+			sourceColumn: category
+			annotation PBI_ResultType = Table
+		column 'brand'
+			dataType: string
+			sourceColumn: brand
+			annotation PBI_ResultType = Table
+		column 'warehouse'
+			dataType: string
+			sourceColumn: warehouse
+			annotation PBI_ResultType = Table
+		column 'on_hand_qty'
+			dataType: int64
+			sourceColumn: on_hand_qty
+			annotation PBI_ResultType = Table
+		column 'safety_stock'
+			dataType: int64
+			sourceColumn: safety_stock
+			annotation PBI_ResultType = Table
+		column 'in_transit_qty'
+			dataType: int64
+			sourceColumn: in_transit_qty
+			annotation PBI_ResultType = Table
+		column 'stock_gap'
+			dataType: int64
+			sourceColumn: stock_gap
+			annotation PBI_ResultType = Table
+		column 'unit_cost'
+			dataType: double
+			sourceColumn: unit_cost
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'inventory_value'
+			dataType: double
+			sourceColumn: inventory_value
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		partition fact_inventory_snapshot = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_inventory_snapshot_flat.csv"),[Delimiter=",", Columns=17, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"snapshot_id", int64.Type}, {"snapshot_date", dateTime.Type}, {"year_month", string.Type}, {"year", int64.Type}, {"quarter", string.Type}, {"product_id", int64.Type}, {"sku", string.Type}, {"product_name", string.Type}, {"category", string.Type}, {"brand", string.Type}, {"warehouse", string.Type}, {"on_hand_qty", int64.Type}, {"safety_stock", int64.Type}, {"in_transit_qty", int64.Type}, {"stock_gap", int64.Type}, {"unit_cost", double.Type}, {"inventory_value", double.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"snapshot_id", "snapshot_id", Replacer.ReplaceText, {"snapshot_id"})
+				in
+					#"Removed BOM"
+
+	table fact_lead_opportunity
+		column 'lead_id'
+			dataType: int64
+			sourceColumn: lead_id
+			annotation PBI_ResultType = Table
+		column 'lead_name'
+			dataType: string
+			sourceColumn: lead_name
+			annotation PBI_ResultType = Table
+		column 'created_date'
+			dataType: dateTime
+			sourceColumn: created_date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'quarter'
+			dataType: string
+			sourceColumn: quarter
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'customer_id'
+			dataType: int64
+			sourceColumn: customer_id
+			annotation PBI_ResultType = Table
+		column 'customer_name'
+			dataType: string
+			sourceColumn: customer_name
+			annotation PBI_ResultType = Table
+		column 'customer_tier'
+			dataType: string
+			sourceColumn: customer_tier
+			annotation PBI_ResultType = Table
+		column 'customer_industry'
+			dataType: string
+			sourceColumn: customer_industry
+			annotation PBI_ResultType = Table
+		column 'customer_region'
+			dataType: string
+			sourceColumn: customer_region
+			annotation PBI_ResultType = Table
+		column 'source_channel'
+			dataType: string
+			sourceColumn: source_channel
+			annotation PBI_ResultType = Table
+		column 'stage'
+			dataType: string
+			sourceColumn: stage
+			annotation PBI_ResultType = Table
+		column 'expected_amount'
+			dataType: double
+			sourceColumn: expected_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'actual_amount'
+			dataType: double
+			sourceColumn: actual_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'win_probability'
+			dataType: double
+			sourceColumn: win_probability
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'ai_assisted'
+			dataType: boolean
+			sourceColumn: ai_assisted
+			annotation PBI_ResultType = Table
+		column 'cycle_days'
+			dataType: int64
+			sourceColumn: cycle_days
+			annotation PBI_ResultType = Table
+		column 'loss_reason'
+			dataType: string
+			sourceColumn: loss_reason
+			annotation PBI_ResultType = Table
+		column 'owner_employee_id'
+			dataType: int64
+			sourceColumn: owner_employee_id
+			annotation PBI_ResultType = Table
+		column 'owner_name'
+			dataType: string
+			sourceColumn: owner_name
+			annotation PBI_ResultType = Table
+		column 'sales_team'
+			dataType: string
+			sourceColumn: sales_team
+			annotation PBI_ResultType = Table
+		partition fact_lead_opportunity = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_lead_opportunity_flat.csv"),[Delimiter=",", Columns=22, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"lead_id", int64.Type}, {"lead_name", string.Type}, {"created_date", dateTime.Type}, {"year", int64.Type}, {"quarter", string.Type}, {"year_month", string.Type}, {"customer_id", int64.Type}, {"customer_name", string.Type}, {"customer_tier", string.Type}, {"customer_industry", string.Type}, {"customer_region", string.Type}, {"source_channel", string.Type}, {"stage", string.Type}, {"expected_amount", double.Type}, {"actual_amount", double.Type}, {"win_probability", double.Type}, {"ai_assisted", boolean.Type}, {"cycle_days", int64.Type}, {"loss_reason", string.Type}, {"owner_employee_id", int64.Type}, {"owner_name", string.Type}, {"sales_team", string.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"lead_id", "lead_id", Replacer.ReplaceText, {"lead_id"})
+				in
+					#"Removed BOM"
+
+	table fact_customer_ticket
+		column 'ticket_id'
+			dataType: int64
+			sourceColumn: ticket_id
+			annotation PBI_ResultType = Table
+		column 'created_date'
+			dataType: dateTime
+			sourceColumn: created_date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'customer_id'
+			dataType: int64
+			sourceColumn: customer_id
+			annotation PBI_ResultType = Table
+		column 'customer_name'
+			dataType: string
+			sourceColumn: customer_name
+			annotation PBI_ResultType = Table
+		column 'customer_tier'
+			dataType: string
+			sourceColumn: customer_tier
+			annotation PBI_ResultType = Table
+		column 'customer_industry'
+			dataType: string
+			sourceColumn: customer_industry
+			annotation PBI_ResultType = Table
+		column 'customer_region'
+			dataType: string
+			sourceColumn: customer_region
+			annotation PBI_ResultType = Table
+		column 'topic_type'
+			dataType: string
+			sourceColumn: topic_type
+			annotation PBI_ResultType = Table
+		column 'channel'
+			dataType: string
+			sourceColumn: channel
+			annotation PBI_ResultType = Table
+		column 'ai_handled'
+			dataType: boolean
+			sourceColumn: ai_handled
+			annotation PBI_ResultType = Table
+		column 'first_response_minutes'
+			dataType: int64
+			sourceColumn: first_response_minutes
+			annotation PBI_ResultType = Table
+		column 'resolution_hours'
+			dataType: double
+			sourceColumn: resolution_hours
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'satisfaction'
+			dataType: int64
+			sourceColumn: satisfaction
+			annotation PBI_ResultType = Table
+		column 'converted_to_opportunity'
+			dataType: int64
+			sourceColumn: converted_to_opportunity
+			annotation PBI_ResultType = Table
+		partition fact_customer_ticket = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_customer_ticket_flat.csv"),[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ticket_id", int64.Type}, {"created_date", dateTime.Type}, {"year", int64.Type}, {"year_month", string.Type}, {"customer_id", int64.Type}, {"customer_name", string.Type}, {"customer_tier", string.Type}, {"customer_industry", string.Type}, {"customer_region", string.Type}, {"topic_type", string.Type}, {"channel", string.Type}, {"ai_handled", boolean.Type}, {"first_response_minutes", int64.Type}, {"resolution_hours", double.Type}, {"satisfaction", int64.Type}, {"converted_to_opportunity", int64.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"ticket_id", "ticket_id", Replacer.ReplaceText, {"ticket_id"})
+				in
+					#"Removed BOM"
+
+	table fact_marketing_spend
+		column 'spend_id'
+			dataType: int64
+			sourceColumn: spend_id
+			annotation PBI_ResultType = Table
+		column 'date'
+			dataType: dateTime
+			sourceColumn: date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'channel'
+			dataType: string
+			sourceColumn: channel
+			annotation PBI_ResultType = Table
+		column 'campaign_name'
+			dataType: string
+			sourceColumn: campaign_name
+			annotation PBI_ResultType = Table
+		column 'cost_amount'
+			dataType: double
+			sourceColumn: cost_amount
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'leads_count'
+			dataType: int64
+			sourceColumn: leads_count
+			annotation PBI_ResultType = Table
+		column 'revenue_attributed'
+			dataType: double
+			sourceColumn: revenue_attributed
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'cac'
+			dataType: double
+			sourceColumn: cac
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'roas'
+			dataType: double
+			sourceColumn: roas
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		partition fact_marketing_spend = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_marketing_spend_flat.csv"),[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"spend_id", int64.Type}, {"date", dateTime.Type}, {"year", int64.Type}, {"year_month", string.Type}, {"channel", string.Type}, {"campaign_name", string.Type}, {"cost_amount", double.Type}, {"leads_count", int64.Type}, {"revenue_attributed", double.Type}, {"cac", double.Type}, {"roas", double.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"spend_id", "spend_id", Replacer.ReplaceText, {"spend_id"})
+				in
+					#"Removed BOM"
+
+	table fact_ai_usage
+		column 'usage_id'
+			dataType: int64
+			sourceColumn: usage_id
+			annotation PBI_ResultType = Table
+		column 'date'
+			dataType: dateTime
+			sourceColumn: date
+			annotation PBI_ResultType = Table
+		column 'year'
+			dataType: int64
+			sourceColumn: year
+			annotation PBI_ResultType = Table
+		column 'year_month'
+			dataType: string
+			sourceColumn: year_month
+			annotation PBI_ResultType = Table
+		column 'employee_id'
+			dataType: int64
+			sourceColumn: employee_id
+			annotation PBI_ResultType = Table
+		column 'employee_name'
+			dataType: string
+			sourceColumn: employee_name
+			annotation PBI_ResultType = Table
+		column 'sales_team'
+			dataType: string
+			sourceColumn: sales_team
+			annotation PBI_ResultType = Table
+		column 'sales_role'
+			dataType: string
+			sourceColumn: sales_role
+			annotation PBI_ResultType = Table
+		column 'scenario'
+			dataType: string
+			sourceColumn: scenario
+			annotation PBI_ResultType = Table
+		column 'query_count'
+			dataType: int64
+			sourceColumn: query_count
+			annotation PBI_ResultType = Table
+		column 'accepted_count'
+			dataType: int64
+			sourceColumn: accepted_count
+			annotation PBI_ResultType = Table
+		column 'acceptance_rate'
+			dataType: double
+			sourceColumn: acceptance_rate
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		column 'minutes_saved'
+			dataType: double
+			sourceColumn: minutes_saved
+			formatString: #,##0.00
+			annotation PBI_ResultType = Table
+		partition fact_ai_usage = m
+			mode: import
+			source =
+				let
+					Source = Csv.Document(File.Contents("C:\\path\\to\\project-erp\\bi\\data\\fact_ai_usage_flat.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"usage_id", int64.Type}, {"date", dateTime.Type}, {"year", int64.Type}, {"year_month", string.Type}, {"employee_id", int64.Type}, {"employee_name", string.Type}, {"sales_team", string.Type}, {"sales_role", string.Type}, {"scenario", string.Type}, {"query_count", int64.Type}, {"accepted_count", int64.Type}, {"acceptance_rate", double.Type}, {"minutes_saved", double.Type}}),
+					#"Removed BOM" = Table.ReplaceValue(#"Changed Type", "#(char)65279"&"usage_id", "usage_id", Replacer.ReplaceText, {"usage_id"})
+				in
+					#"Removed BOM"
+
+	measure '营收' = CALCULATE(SUM(fact_sales_order[net_amount]), fact_sales_order[order_status] = "已完成", fact_sales_order[is_return] = 0)
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '毛利' = CALCULATE(SUM(fact_sales_order[gross_profit]), fact_sales_order[order_status] = "已完成", fact_sales_order[is_return] = 0)
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '毛利率' = DIVIDE([毛利], [营收])
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '完成订单数' = CALCULATE(DISTINCTCOUNT(fact_sales_order[order_id]), fact_sales_order[order_status] = "已完成", fact_sales_order[is_return] = 0)
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure '成交客户数' = CALCULATE(DISTINCTCOUNT(fact_sales_order[customer_id]), fact_sales_order[order_status] = "已完成", fact_sales_order[is_return] = 0)
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure '客单价' = DIVIDE([营收], [完成订单数])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '平均折扣率' = DIVIDE(CALCULATE(SUM(fact_sales_order[discount_amount]), fact_sales_order[order_status] = "已完成"), CALCULATE(SUM(fact_sales_order[gross_amount]), fact_sales_order[order_status] = "已完成"))
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '退货订单额' = CALCULATE(SUM(fact_sales_order[net_amount]), fact_sales_order[is_return] = 1)
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '营收同比' = VAR Cur = [营收] VAR Prev = CALCULATE([营收], DATEADD(dim_date[full_date], -1, YEAR)) RETURN DIVIDE(Cur - Prev, Prev)
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '营收环比' = VAR Cur = [营收] VAR Prev = CALCULATE([营收], DATEADD(dim_date[full_date], -1, MONTH)) RETURN DIVIDE(Cur - Prev, Prev)
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '营收 YTD' = CALCULATE([营收], DATESYTD(dim_date[full_date]))
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '库存金额' = SUM(fact_inventory_snapshot[inventory_value])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '缺货 SKU 数' = CALCULATE(DISTINCTCOUNT(fact_inventory_snapshot[product_id]), fact_inventory_snapshot[stock_gap] > 0)
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure '缺货率' = DIVIDE([缺货 SKU 数], CALCULATE(DISTINCTCOUNT(fact_inventory_snapshot[product_id])))
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '在途库存金额' = SUM(fact_inventory_snapshot[in_transit_qty] * fact_inventory_snapshot[unit_cost])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '商机数' = DISTINCTCOUNT(fact_lead_opportunity[lead_id])
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure '商机金额' = SUM(fact_lead_opportunity[actual_amount])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '成单数' = CALCULATE(DISTINCTCOUNT(fact_lead_opportunity[lead_id]), fact_lead_opportunity[stage] = "成单")
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure '成单率' = DIVIDE([成单数], [商机数])
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure 'AI 辅助成单率' = DIVIDE(CALCULATE(DISTINCTCOUNT(fact_lead_opportunity[lead_id]), fact_lead_opportunity[stage] = "成单", fact_lead_opportunity[ai_assisted] = 1), CALCULATE(DISTINCTCOUNT(fact_lead_opportunity[lead_id]), fact_lead_opportunity[ai_assisted] = 1))
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '平均销售周期(天)' = AVERAGE(fact_lead_opportunity[cycle_days])
+		formatString: #,##0.0
+		annotation PBI_ResultType = Numeric
+
+	measure '投放成本' = SUM(fact_marketing_spend[cost_amount])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure '归因收入' = SUM(fact_marketing_spend[revenue_attributed])
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure 'ROAS' = DIVIDE([归因收入], [投放成本])
+		formatString: 0.00
+		annotation PBI_ResultType = Numeric
+
+	measure 'CAC' = DIVIDE([投放成本], SUM(fact_marketing_spend[leads_count]))
+		formatString: #,##0.00
+		annotation PBI_ResultType = Numeric
+
+	measure 'AI 调用次数' = SUM(fact_ai_usage[query_count])
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure 'AI 采纳率' = DIVIDE(SUM(fact_ai_usage[accepted_count]), SUM(fact_ai_usage[query_count]))
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure 'AI 节省工时' = SUM(fact_ai_usage[minutes_saved])
+		formatString: #,##0
+		annotation PBI_ResultType = Numeric
+
+	measure 'AI 处理工单占比' = DIVIDE(CALCULATE(DISTINCTCOUNT(fact_customer_ticket[ticket_id]), fact_customer_ticket[ai_handled] = 1), DISTINCTCOUNT(fact_customer_ticket[ticket_id]))
+		formatString: 0.0%
+		annotation PBI_ResultType = Numeric
+
+	measure '平均工单解决时长' = AVERAGE(fact_customer_ticket[resolution_hours])
+		formatString: #,##0.0
+		annotation PBI_ResultType = Numeric
+
+	relationship rel_fact_sales_order_dim_customer_1
+		fromColumn: fact_sales_order.customer_id
+		toColumn: dim_customer.customer_id
+
+	relationship rel_fact_sales_order_dim_employee_2
+		fromColumn: fact_sales_order.employee_id
+		toColumn: dim_employee.employee_id
+
+	relationship rel_fact_sales_order_dim_date_3
+		fromColumn: fact_sales_order.order_date
+		toColumn: dim_date.full_date
+
+	relationship rel_fact_sales_order_item_fact_sales_order_4
+		fromColumn: fact_sales_order_item.order_id
+		toColumn: fact_sales_order.order_id
+
+	relationship rel_fact_sales_order_item_dim_product_5
+		fromColumn: fact_sales_order_item.product_id
+		toColumn: dim_product.product_id
+
+	relationship rel_fact_inventory_snapshot_dim_product_6
+		fromColumn: fact_inventory_snapshot.product_id
+		toColumn: dim_product.product_id
+
+	relationship rel_fact_inventory_snapshot_dim_date_7
+		fromColumn: fact_inventory_snapshot.snapshot_date
+		toColumn: dim_date.full_date
+
+	relationship rel_fact_lead_opportunity_dim_customer_8
+		fromColumn: fact_lead_opportunity.customer_id
+		toColumn: dim_customer.customer_id
+
+	relationship rel_fact_lead_opportunity_dim_employee_9
+		fromColumn: fact_lead_opportunity.owner_employee_id
+		toColumn: dim_employee.employee_id
+
+	relationship rel_fact_lead_opportunity_dim_date_10
+		fromColumn: fact_lead_opportunity.created_date
+		toColumn: dim_date.full_date
+
+	relationship rel_fact_customer_ticket_dim_customer_11
+		fromColumn: fact_customer_ticket.customer_id
+		toColumn: dim_customer.customer_id
+
+	relationship rel_fact_customer_ticket_dim_date_12
+		fromColumn: fact_customer_ticket.created_date
+		toColumn: dim_date.full_date
+
+	relationship rel_fact_marketing_spend_dim_date_13
+		fromColumn: fact_marketing_spend.date
+		toColumn: dim_date.full_date
+
+	relationship rel_fact_ai_usage_dim_employee_14
+		fromColumn: fact_ai_usage.employee_id
+		toColumn: dim_employee.employee_id
+
+	relationship rel_fact_ai_usage_dim_date_15
+		fromColumn: fact_ai_usage.date
+		toColumn: dim_date.full_date

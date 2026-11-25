@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0f16">
+  <title>ERP Analytics · 经营分析台</title>
+  <link rel="stylesheet" href="/assets/styles.css?v=6">
+</head>
+<body>
+  <!-- 图标符号表：一次性定义，全站用 <use> 引用，避免重复 path -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></symbol>
+      <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></symbol>
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 7.8 12 3 3 7.8l9 4.8 9-4.8z"/><path d="M3 7.8v8.4L12 21l9-4.8V7.8"/><path d="M12 12.6V21"/></symbol>
+      <symbol id="i-funnel" viewBox="0 0 24 24"><path d="M3 4h18l-7 8.2V19l-4 2v-8.8L3 4z"/></symbol>
+      <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 12.4 21.6a1.4 1.4 0 0 1-2 0L2.8 14a1.4 1.4 0 0 1-.4-1V4.4A1.4 1.4 0 0 1 3.8 3h8.6c.4 0 .7.1 1 .4l7.2 7.2a1.4 1.4 0 0 1 0 2.8z"/><circle cx="7.6" cy="7.6" r="1.4"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0"/><path d="M16 5.2a3.3 3.3 0 0 1 0 5.6"/><path d="M17.6 14.2A6 6 0 0 1 21.5 20"/></symbol>
+      <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 2.5h12v19l-3-1.8-3 1.8-3-1.8-3 1.8v-19z"/><path d="M9.2 7.5h5.6"/><path d="M9.2 11.5h5.6"/><path d="M9.2 15.5h3.6"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><polyline points="15,17 20,12 15,7"/><path d="M20 12H9"/><path d="M12 3H5.5A2.5 2.5 0 0 0 3 5.5v13A2.5 2.5 0 0 0 5.5 21H12"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.9-6.4"/><polyline points="20.5,3.5 20.5,9.2 14.8,9.2"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2.5 21 7.5l-9 5-9-5 9-5z"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16.5 12,21.5 21,16.5"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.2 2 4.5 13.6h5.9L9.3 22l8.7-11.6h-5.9L13.2 2z"/></symbol>
+      <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.6" rx="8" ry="3.1"/><path d="M4 5.6v12.8c0 1.7 3.6 3.1 8 3.1s8-1.4 8-3.1V5.6"/><path d="M4 12c0 1.7 3.6 3.1 8 3.1s8-1.4 8-3.1"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15.5,14"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ 登录页 ============ -->
+  <div id="login" class="login-wrap">
+    <section class="login-side">
+      <div class="login-brand">
+        <span class="brand-mark">EA</span>
+        <div>
+          <strong>ERP Analytics</strong>
+          <span>工业零部件经销 · 经营分析台</span>
+        </div>
+      </div>
+      <h1>把经营数据<br>变成能落地的动作</h1>
+      <ul class="login-points">
+        <li><svg class="ico"><use href="#i-db"/></svg><div><b>星型模型 16 张表</b><span>5 维度 + 9 事实 + 2 系统表，24 个月确定性种子数据</span></div></li>
+        <li><svg class="ico"><use href="#i-layers"/></svg><div><b>20 个分析 SQL 双库同跑</b><span>窗口函数 / CTE / 递归 CTE，SQLite 与 MySQL 结果逐值一致</span></div></li>
+        <li><svg class="ico"><use href="#i-bolt"/></svg><div><b>洞察可复现</b><span>每条结论附带证据 SQL，指标口径只有一个来源</span></div></li>
+      </ul>
+      <p class="login-foot">演示环境 · 数据为程序生成的合成数据</p>
+    </section>
+
+    <form class="login-card" id="login-form">
+      <h2>登录</h2>
+      <p class="login-sub">使用演示账号进入分析台</p>
+      <label>账号<input id="username" value="analyst" autocomplete="username" required></label>
+      <label>密码<input id="password" type="password" value="Analyst@123456" autocomplete="current-password" required></label>
+      <button type="submit" class="btn-primary">登 录</button>
+      <p class="hint">admin / analyst / sales / viewer（密码见 README）</p>
+      <p class="err" id="login-error"></p>
+    </form>
+  </div>
+
+  <!-- ============ 主界面 ============ -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <span class="brand-mark">EA</span>
+        <div class="side-brand-text">
+          <strong>ERP Analytics</strong>
+          <span>经营分析台</span>
+        </div>
+      </div>
+
+      <nav id="nav" class="nav">
+        <div class="nav-group">
+          <p class="nav-group-title">概览</p>
+          <button data-view="overview" class="nav-item active"><svg class="ico"><use href="#i-grid"/></svg><span>经营总览</span></button>
+        </div>
+        <div class="nav-group">
+          <p class="nav-group-title">业务分析</p>
+          <button data-view="sales" class="nav-item"><svg class="ico"><use href="#i-trend"/></svg><span>销售分析</span></button>
+          <button data-view="inventory" class="nav-item"><svg class="ico"><use href="#i-box"/></svg><span>库存健康</span></button>
+          <button data-view="funnel" class="nav-item"><svg class="ico"><use href="#i-funnel"/></svg><span>漏斗与 AI 价值</span></button>
+        </div>
+        <div class="nav-group">
+          <p class="nav-group-title">主数据</p>
+          <button data-view="products" class="nav-item"><svg class="ico"><use href="#i-tag"/></svg><span>产品主数据</span></button>
+          <button data-view="customers" class="nav-item"><svg class="ico"><use href="#i-users"/></svg><span>客户主数据</span></button>
+          <button data-view="orders" class="nav-item"><svg class="ico"><use href="#i-receipt"/></svg><span>销售订单</span></button>
+        </div>
+      </nav>
+
+      <div class="side-foot">
+        <div class="user-card">
+          <span class="avatar" id="who-avatar">--</span>
+          <div class="user-meta">
+            <b id="who-name">—</b>
+            <span id="who-role">—</span>
+          </div>
+          <button id="logout" class="icon-btn" title="退出登录" aria-label="退出登录"><svg class="ico"><use href="#i-logout"/></svg></button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h2 id="view-title">经营总览</h2>
+          <p id="view-sub" class="sub"></p>
+        </div>
+        <div class="topbar-right">
+          <label class="period">统计区间
+            <select id="period">
+              <option value="12">最近 12 个月</option>
+              <option value="24">全部 24 个月</option>
+            </select>
+          </label>
+          <button id="refresh" class="icon-btn" title="刷新当前视图" aria-label="刷新"><svg class="ico"><use href="#i-refresh"/></svg></button>
+          <span id="clock" class="clock"></span>
+        </div>
+      </header>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/assets/app.js?v=6"></script>
+</body>
+</html>

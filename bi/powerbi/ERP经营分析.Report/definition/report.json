@@ -1,0 +1,179 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/2.0.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY24SU10"
+    }
+  },
+  "layoutOptimization": "None",
+  "settings": {
+    "useNewFilterPaneExperience": true
+  },
+  "visualInteractions": {
+    "defaultFilterInteractions": "filterAndHighlight"
+  },
+  "pages": {
+    "ReportSectionOverview": {
+      "name": "ReportSectionOverview",
+      "displayName": "经营总览",
+      "height": 720,
+      "width": 1280,
+      "displayOption": 1,
+      "type": 2,
+      "filterConfig": {
+        "filters": []
+      },
+      "visualContainers": [
+        {
+          "name": "vis_sales_trend",
+          "position": {
+            "x": 0,
+            "y": 40,
+            "z": 0,
+            "width": 640,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"vis_sales_trend\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 0, \"y\": 40, \"z\": 0, \"width\": 640, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"lineChart\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"year_month\"}}, \"queryRef\": \"s.year_month\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}}, \"queryRef\": \"s.营收\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"year_month\"}, \"Name\": \"fact_sales_order.year_month\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.year_month\", \"s.营收\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"year_month\"}, \"Name\": \"fact_sales_order.year_month\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"year_month\"}, \"Name\": \"fact_sales_order.year_month\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}}"
+        },
+        {
+          "name": "card_revenue",
+          "position": {
+            "x": 660,
+            "y": 40,
+            "z": 0,
+            "width": 260,
+            "height": 120,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"card_revenue\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 660, \"y\": 40, \"z\": 0, \"width\": 260, \"height\": 120, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}}, \"queryRef\": \"s.营收\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.营收\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}}"
+        },
+        {
+          "name": "card_margin",
+          "position": {
+            "x": 940,
+            "y": 40,
+            "z": 0,
+            "width": 260,
+            "height": 120,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"card_margin\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 940, \"y\": 40, \"z\": 0, \"width\": 260, \"height\": 120, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"毛利率\"}}, \"queryRef\": \"s.毛利率\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"毛利率\"}, \"Name\": \"fact_sales_order.毛利率\", \"NativeReferenceName\": \"毛利率\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.毛利率\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"毛利率\"}, \"Name\": \"fact_sales_order.毛利率\", \"NativeReferenceName\": \"毛利率\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"毛利率\"}, \"Name\": \"fact_sales_order.毛利率\", \"NativeReferenceName\": \"毛利率\"}]}}"
+        },
+        {
+          "name": "tbl_customer",
+          "position": {
+            "x": 0,
+            "y": 360,
+            "z": 0,
+            "width": 640,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"tbl_customer\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 0, \"y\": 360, \"z\": 0, \"width\": 640, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_tier\"}}, \"queryRef\": \"s.customer_tier\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_industry\"}}, \"queryRef\": \"s.customer_industry\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}}, \"queryRef\": \"s.营收\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_tier\"}, \"Name\": \"fact_sales_order.customer_tier\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_industry\"}, \"Name\": \"fact_sales_order.customer_industry\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.customer_tier\", \"s.customer_industry\", \"s.营收\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_tier\"}, \"Name\": \"fact_sales_order.customer_tier\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_industry\"}, \"Name\": \"fact_sales_order.customer_industry\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_tier\"}, \"Name\": \"fact_sales_order.customer_tier\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"customer_industry\"}, \"Name\": \"fact_sales_order.customer_industry\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"营收\"}, \"Name\": \"fact_sales_order.营收\", \"NativeReferenceName\": \"营收\"}]}}"
+        },
+        {
+          "name": "tbl_product",
+          "position": {
+            "x": 660,
+            "y": 180,
+            "z": 0,
+            "width": 640,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"tbl_product\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 660, \"y\": 180, \"z\": 0, \"width\": 640, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"product_name\"}}, \"queryRef\": \"s.product_name\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}}, \"queryRef\": \"s.category\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"revenue_amount\"}}, \"queryRef\": \"s.revenue_amount\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order_item\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"product_name\"}, \"Name\": \"fact_sales_order_item.product_name\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_sales_order_item.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"revenue_amount\"}, \"Name\": \"fact_sales_order_item.revenue_amount\", \"NativeReferenceName\": \"revenue_amount\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.product_name\", \"s.category\", \"s.revenue_amount\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order_item\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"product_name\"}, \"Name\": \"fact_sales_order_item.product_name\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_sales_order_item.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"revenue_amount\"}, \"Name\": \"fact_sales_order_item.revenue_amount\", \"NativeReferenceName\": \"revenue_amount\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_sales_order_item\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"product_name\"}, \"Name\": \"fact_sales_order_item.product_name\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_sales_order_item.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"revenue_amount\"}, \"Name\": \"fact_sales_order_item.revenue_amount\", \"NativeReferenceName\": \"revenue_amount\"}]}}"
+        }
+      ]
+    },
+    "ReportSectionOps": {
+      "name": "ReportSectionOps",
+      "displayName": "库存与增长",
+      "height": 720,
+      "width": 1280,
+      "displayOption": 1,
+      "type": 2,
+      "filterConfig": {
+        "filters": []
+      },
+      "visualContainers": [
+        {
+          "name": "tbl_inv",
+          "position": {
+            "x": 0,
+            "y": 40,
+            "z": 0,
+            "width": 620,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"tbl_inv\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 0, \"y\": 40, \"z\": 0, \"width\": 620, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"warehouse\"}}, \"queryRef\": \"s.warehouse\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}}, \"queryRef\": \"s.category\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"inventory_value\"}}, \"queryRef\": \"s.inventory_value\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stock_gap\"}}, \"queryRef\": \"s.stock_gap\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_inventory_snapshot\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"warehouse\"}, \"Name\": \"fact_inventory_snapshot.warehouse\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_inventory_snapshot.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"inventory_value\"}, \"Name\": \"fact_inventory_snapshot.inventory_value\", \"NativeReferenceName\": \"inventory_value\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stock_gap\"}, \"Name\": \"fact_inventory_snapshot.stock_gap\", \"NativeReferenceName\": \"stock_gap\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.warehouse\", \"s.category\", \"s.inventory_value\", \"s.stock_gap\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_inventory_snapshot\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"warehouse\"}, \"Name\": \"fact_inventory_snapshot.warehouse\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_inventory_snapshot.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"inventory_value\"}, \"Name\": \"fact_inventory_snapshot.inventory_value\", \"NativeReferenceName\": \"inventory_value\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stock_gap\"}, \"Name\": \"fact_inventory_snapshot.stock_gap\", \"NativeReferenceName\": \"stock_gap\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_inventory_snapshot\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"warehouse\"}, \"Name\": \"fact_inventory_snapshot.warehouse\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"category\"}, \"Name\": \"fact_inventory_snapshot.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"inventory_value\"}, \"Name\": \"fact_inventory_snapshot.inventory_value\", \"NativeReferenceName\": \"inventory_value\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stock_gap\"}, \"Name\": \"fact_inventory_snapshot.stock_gap\", \"NativeReferenceName\": \"stock_gap\"}]}}"
+        },
+        {
+          "name": "bar_funnel",
+          "position": {
+            "x": 640,
+            "y": 40,
+            "z": 0,
+            "width": 620,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"bar_funnel\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 640, \"y\": 40, \"z\": 0, \"width\": 620, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"barChart\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stage\"}}, \"queryRef\": \"s.stage\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"商机数\"}}, \"queryRef\": \"s.商机数\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_lead_opportunity\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stage\"}, \"Name\": \"fact_lead_opportunity.stage\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"商机数\"}, \"Name\": \"fact_lead_opportunity.商机数\", \"NativeReferenceName\": \"商机数\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.stage\", \"s.商机数\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_lead_opportunity\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stage\"}, \"Name\": \"fact_lead_opportunity.stage\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"商机数\"}, \"Name\": \"fact_lead_opportunity.商机数\", \"NativeReferenceName\": \"商机数\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_lead_opportunity\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"stage\"}, \"Name\": \"fact_lead_opportunity.stage\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"商机数\"}, \"Name\": \"fact_lead_opportunity.商机数\", \"NativeReferenceName\": \"商机数\"}]}}"
+        },
+        {
+          "name": "tbl_mkt",
+          "position": {
+            "x": 0,
+            "y": 360,
+            "z": 0,
+            "width": 620,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"tbl_mkt\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 0, \"y\": 360, \"z\": 0, \"width\": 620, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"channel\"}}, \"queryRef\": \"s.channel\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"投放成本\"}}, \"queryRef\": \"s.投放成本\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"归因收入\"}}, \"queryRef\": \"s.归因收入\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"ROAS\"}}, \"queryRef\": \"s.ROAS\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_marketing_spend\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"channel\"}, \"Name\": \"fact_marketing_spend.channel\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"投放成本\"}, \"Name\": \"fact_marketing_spend.投放成本\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"归因收入\"}, \"Name\": \"fact_marketing_spend.归因收入\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"ROAS\"}, \"Name\": \"fact_marketing_spend.ROAS\", \"NativeReferenceName\": \"ROAS\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.channel\", \"s.投放成本\", \"s.归因收入\", \"s.ROAS\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_marketing_spend\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"channel\"}, \"Name\": \"fact_marketing_spend.channel\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"投放成本\"}, \"Name\": \"fact_marketing_spend.投放成本\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"归因收入\"}, \"Name\": \"fact_marketing_spend.归因收入\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"ROAS\"}, \"Name\": \"fact_marketing_spend.ROAS\", \"NativeReferenceName\": \"ROAS\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_marketing_spend\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"channel\"}, \"Name\": \"fact_marketing_spend.channel\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"投放成本\"}, \"Name\": \"fact_marketing_spend.投放成本\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"归因收入\"}, \"Name\": \"fact_marketing_spend.归因收入\", \"NativeReferenceName\": \"ROAS\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"ROAS\"}, \"Name\": \"fact_marketing_spend.ROAS\", \"NativeReferenceName\": \"ROAS\"}]}}"
+        },
+        {
+          "name": "bar_ai",
+          "position": {
+            "x": 640,
+            "y": 360,
+            "z": 0,
+            "width": 620,
+            "height": 300,
+            "tabOrder": 0
+          },
+          "config": "{\"name\": \"bar_ai\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 640, \"y\": 360, \"z\": 0, \"width\": 620, \"height\": 300, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"barChart\", \"projections\": [{\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"scenario\"}}, \"queryRef\": \"s.scenario\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 节省工时\"}}, \"queryRef\": \"s.AI 节省工时\"}, {\"field\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 采纳率\"}}, \"queryRef\": \"s.AI 采纳率\"}], \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_ai_usage\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"scenario\"}, \"Name\": \"fact_ai_usage.scenario\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 节省工时\"}, \"Name\": \"fact_ai_usage.AI 节省工时\", \"NativeReferenceName\": \"AI 节省工时\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 采纳率\"}, \"Name\": \"fact_ai_usage.AI 采纳率\", \"NativeReferenceName\": \"AI 节省工时\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true, \"activeProjections\": [\"s.scenario\", \"s.AI 节省工时\", \"s.AI 采纳率\"]}, \"vcObjects\": {}}",
+          "filters": "[]",
+          "query": "{\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_ai_usage\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"scenario\"}, \"Name\": \"fact_ai_usage.scenario\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 节省工时\"}, \"Name\": \"fact_ai_usage.AI 节省工时\", \"NativeReferenceName\": \"AI 节省工时\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 采纳率\"}, \"Name\": \"fact_ai_usage.AI 采纳率\", \"NativeReferenceName\": \"AI 节省工时\"}]}",
+          "dataTransforms": "{\"query\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"fact_ai_usage\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"scenario\"}, \"Name\": \"fact_ai_usage.scenario\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 节省工时\"}, \"Name\": \"fact_ai_usage.AI 节省工时\", \"NativeReferenceName\": \"AI 节省工时\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"AI 采纳率\"}, \"Name\": \"fact_ai_usage.AI 采纳率\", \"NativeReferenceName\": \"AI 节省工时\"}]}}"
+        }
+      ]
+    }
+  },
+  "reportExtensions": []
+}
