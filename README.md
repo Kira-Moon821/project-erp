@@ -26,6 +26,8 @@ uvicorn app.main:app --reload --port 8000            # 起服务
 > 不需要记命令、也不需要关心当前终端在哪个子目录。
 > 注意：必须在**项目根目录**执行脚本；如果在 `web\` 等子目录里，请先 `cd ..` 回到 `erp-analytics-lab`。
 > 一定要用命令行启动时，进入项目根目录后执行：`.\启动网站.bat`（路径随你的克隆位置而定，不要照抄别人的绝对路径）。
+>
+> **关于 Python 解释器**：脚本会自己找"装了依赖的那个 Python"，顺序是 `项目根目录\.venv` → PATH 里的每个 `python` → WorkBuddy 内置解释器 → 官方安装目录，每个候选都用 `-c "import uvicorn"` 实测。所以机器上同时装了 Anaconda 也不会跑错（`No module named uvicorn` 就是这个原因）。`scripts/serve.cmd` 承载真正的启动命令，崩溃时窗口会停住并显示报错。
 
 一键完成（Windows PowerShell）：
 
